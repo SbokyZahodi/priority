@@ -15,17 +15,6 @@ model User {
   username String     @unique
   password String
   projects Projects[]
-  tokens   Tokens[]
-}
-
-model Tokens {
-  id      Int      @id @default(autoincrement())
-  created DateTime @default(now())
-  updated DateTime @updatedAt
-  expired DateTime
-  valid   Boolean  @default(true)
-  User    User?    @relation(fields: [userId], references: [id])
-  userId  Int?
 }
 
 model Projects {

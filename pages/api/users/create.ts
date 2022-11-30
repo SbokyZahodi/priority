@@ -1,6 +1,6 @@
 import { hashSync } from "bcrypt";
 import type { NextApiRequest, NextApiResponse } from "next";
-import { context } from "../../../context";
+import { context } from "../../../lib/context";
 
 interface createUserDTO {
   login: string;

@@ -2,7 +2,7 @@ import { compareSync } from "bcrypt";
 import { setCookie } from "cookies-next";
 import { sign } from "jsonwebtoken";
 import type { NextApiRequest, NextApiResponse } from "next";
-import { context } from "../../../context";
+import { context } from "../../../lib/context";
 
 const generateToken = (id: number) => {
   const payload = {
