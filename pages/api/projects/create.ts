@@ -15,9 +15,9 @@ export default async function handler(
         data: {
           title,
           url_by_title: toURL(title),
-          User: {
+          user: {
             connect: {
-              id: userid,
+              id: +userid,
             },
           },
         },

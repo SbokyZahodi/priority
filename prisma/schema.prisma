@@ -18,18 +18,18 @@ model User {
 }
 
 model Projects {
-  id           Int     @id @default(autoincrement())
-  url_by_title String  @unique
+  id           Int    @id @default(autoincrement())
+  url_by_title String @unique
   title        String
   tasks        Task[]
-  User         User?   @relation(fields: [id], references: [id])
-  userId       String?
+  user         User   @relation(fields: [userId], references: [id])
+  userId Int
 }
 
 model Task {
   id         Int       @id @default(autoincrement())
   todo       String
   completed  Boolean   @default(false)
-  Projects   Projects? @relation(fields: [projectsId], references: [id])
-  projectsId Int?
+  projects   Projects @relation(fields: [projectsId], references: [id])
+  projectsId Int
 }
