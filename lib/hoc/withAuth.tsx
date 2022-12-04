@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { authAPI } from "../API/auth/auth";
+import { authAPI } from "../../API/auth/auth";
 
 export const withAuth = (Component: any) => {
   const AuthComponent = () => {
@@ -17,10 +17,6 @@ export const withAuth = (Component: any) => {
 
       checkIsUserAuth();
     }, []);
-
-    if (!isUserAuth) {
-      return null;
-    }
 
     return <Component />;
   };

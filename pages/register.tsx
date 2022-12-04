@@ -1,6 +1,6 @@
 import { NextPage } from "next";
 import Register from "../components/auth/register";
-import { userAuthorizedProtect } from "../hoc/userAuthorizedProtect";
+import { userAuthorizedProtect } from "../lib/hoc/userAuthorizedProtect";
 
 interface Props {}
 

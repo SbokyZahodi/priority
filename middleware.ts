@@ -7,11 +7,13 @@ export async function middleware(request: NextRequest) {
   const secret = new TextEncoder().encode(process.env.KEY);
   if (cookie) {
     const { payload } = await jose.jwtVerify(cookie?.value, secret);
+
     const requestHeaders = new Headers(request.headers);
+
     requestHeaders.set("userId", payload.id);
+
     const response = NextResponse.next({
       request: {
-        // New request headers
         headers: requestHeaders,
       },
     });

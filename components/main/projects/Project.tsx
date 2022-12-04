@@ -1,6 +1,7 @@
 import { FC } from "react";
 import { Icon } from "@iconify/react";
 import Link from "next/link";
+import projects from "../../../store/projects";
 
 interface props {
   title: string;

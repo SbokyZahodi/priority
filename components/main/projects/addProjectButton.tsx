@@ -1,26 +1,14 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { FC, useState } from "react";
-import { projectsAPI } from "../../../API/projects/projects";
-import { QUERY_NAMESPACES } from "../../../lib/queryNamespaces";
+import projects from "../../../store/projects";
 
 interface props {}
 
 const AddProjectButton: FC<props> = ({}) => {
   const [ProjectName, setProjectName] = useState("");
-  const client = useQueryClient();
 
-  const createProject = useMutation({
-    mutationKey: [QUERY_NAMESPACES.projects],
-    mutationFn: () => projectsAPI.createProject(ProjectName),
-    onSuccess: () => {
-      client.invalidateQueries([QUERY_NAMESPACES.projects]);
-      console.log("Project created");
-    },
-  });
-
-  const addProject = (e) => {
+  const addProject = (e: KeyboardEvent) => {
     if (e.key === "Enter") {
-      createProject.mutate(ProjectName);
+      projects.createProject(ProjectName);
     }
   };
 

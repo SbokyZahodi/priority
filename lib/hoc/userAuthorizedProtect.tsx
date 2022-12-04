@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { authAPI } from "../API/auth/auth";
+import { authAPI } from "../../API/auth/auth";
 
 export const userAuthorizedProtect = (Component: any) => {
   const Protected = () => {

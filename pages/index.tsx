@@ -1,6 +1,6 @@
 import { NextPage } from "next";
 import Layout from "../components/main/layout";
-import { withAuth } from "../hoc/withAuth";
+import { withAuth } from "../lib/hoc/withAuth";
 
 interface Props {}
 

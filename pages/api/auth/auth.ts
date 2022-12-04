@@ -4,7 +4,6 @@ import { NextApiRequest, NextApiResponse } from "next";
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "GET") {
     const userCookie = req.cookies.user;
-    console.log(process.env.KEY);
 
     if (userCookie) {
       const token = verify(userCookie, process.env.KEY);

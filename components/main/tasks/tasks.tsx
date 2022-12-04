@@ -1,28 +1,22 @@
-import { FC } from "react";
+import { observer } from "mobx-react-lite";
+import { useRouter } from "next/router";
+import { FC, useEffect } from "react";
+import tasks from "../../../store/tasks";
+import Preloader from "../../helpers/preloader";
+import AddTask from "./addTask";
 import Task from "./task";
 
 interface props {}
 
-let uid = 0;
+const Tasks: FC<props> = observer(({}) => {
+  const router = useRouter();
+  const projectId = router.query.project;
 
-let tasks = [
-  { todo: "Создать рабочую папку для проекта", priority: 1, id: uid++ },
-  { todo: "Создать различные ситуации для этого", priority: 2, id: uid++ },
-  { todo: "Починить кнопку sell", priority: 1, id: uid++ },
-  { todo: "Приоритетная задача", priority: 4, id: uid++ },
-  { todo: "Приоритетная задача", priority: 4, id: uid++ },
-  { todo: "Приоритетная задача", priority: 4, id: uid++ },
-  { todo: "Приоритетная задача", priority: 4, id: uid++ },
-  { todo: "Приоритетная задача", priority: 4, id: uid++ },
-  { todo: "Приоритетная задача", priority: 4, id: uid++ },
-  {
-    todo: "Супер мега приоритетная задача которую обязательно надо выполнить за неделю иначе ты погибнешь смертной смертью и будешь очень сильно страдать",
-    priority: 5,
-    id: uid++,
-  },
-];
+  useEffect(() => {
+    tasks.getTodos(projectId);
+  }, [projectId]);
 
-const Tasks: FC<props> = ({}) => {
+  const tasksGroup = tasks.tasks.tasks;
   return (
     <div className={`m-2 overflow-auto w-full`}>
       <div className="sticky top-0 bg-zinc-700 rounded-md m-2 p-2 md:flex space-x-5">
@@ -31,25 +25,35 @@ const Tasks: FC<props> = ({}) => {
           <div className="btn btn-sm btn-ghost">Completed</div>
         </div>
       </div>
-      <div className="m-2">
-        <div className="md:p-4">
-          {tasks
-            .sort((a, b) => {
-              if (a.priority > b.priority) {
-                return 1;
-              }
-              if (a.priority < b.priority) {
-                return -1;
-              }
-              return 0;
-            })
-            .reverse()
-            .map(({ id, priority, todo }) => (
-              <Task todo={todo} id={id} priority={priority} key={id} />
-            ))}
+      <AddTask />
+      <div className="">
+        <div className="">
+          {tasks.getTodoPending && (
+            <Preloader className="flex justify-center items-center" />
+          )}
+          {!tasks.getTodoPending && tasksGroup && sortTasks(tasksGroup)}
         </div>
       </div>
     </div>
   );
+});
+
+const sortTasks = (tasks: { id: number; priority: number; todo: string }[]) => {
+  return tasks
+    .slice()
+    .sort((a, b) => {
+      if (a.priority > b.priority) {
+        return 1;
+      }
+      if (a.priority < b.priority) {
+        return -1;
+      }
+      return 0;
+    })
+    .reverse()
+    .map(({ id, priority, todo }) => (
+      <Task todo={todo} id={id} priority={priority} key={id} />
+    ));
 };
+
 export default Tasks;

@@ -1,3 +1,4 @@
+import { IProject } from "./response";
 import axios from "axios";
 
 class ProjectsAPI {
@@ -14,9 +15,11 @@ class ProjectsAPI {
     ).data;
   }
   async getProjects() {
-    return await (
-      await this.instanse.get("get")
-    ).data;
+    return (await this.instanse.get<IProject>("get")).data;
+  }
+
+  async getTodos(url_by_title: string) {
+    return (await this.instanse.get<>(`${url_by_title}`)).data;
   }
 }
 export const projectsAPI = new ProjectsAPI();

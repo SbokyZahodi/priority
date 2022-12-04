@@ -8,21 +8,30 @@ interface props {}
 const Login: FC<props> = ({}) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [isPending, setisPending] = useState(false);
   const router = useRouter();
   const userData = {
     username,
     password,
   };
 
-  const login = useMutation({
-    mutationFn: () => authAPI.login(userData),
-    onSuccess: () => {
+  // const login = useMutation({
+  //   mutationFn: () => authAPI.login(userData),
+  //   onSuccess: () => {
+  //     router.push("/");
+  //   },
+  //   onError: () => {
+  //     console.log("Error");
+  //   },
+  // });
+
+  const login = async () => {
+    setisPending(true);
+    return await authAPI.login(userData).then(() => {
+      setisPending(false);
       router.push("/");
-    },
-    onError: () => {
-      console.log("Error");
-    },
-  });
+    });
+  };
 
   return (
     <div className={`w-screen h-screen flex items-center justify-center`}>
@@ -47,9 +56,9 @@ const Login: FC<props> = ({}) => {
         <div className="flex justify-center items-center">
           <button
             className={`m-10 btn text-xl btn-wide  text-white hover:bg-zinc-400 shadow-md btn-outline ${
-              login.isLoading && "loading"
+              isPending && "loading"
             } `}
-            onClick={() => login.mutate()}
+            onClick={() => login()}
           >
             Login
           </button>
