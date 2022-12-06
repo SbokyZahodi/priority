@@ -1,24 +1,34 @@
-import { GetServerSideProps, NextPage } from "next";
+import { NextPage } from "next";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
+import { ITask } from "../../../API/projects/response";
 import Layout from "../../../components/main/layout";
 import Tasks from "../../../components/main/tasks/tasks";
-import { withAuth } from "../../../lib/hoc/withAuth";
+import TasksLayout from "../../../components/main/tasks/tasksLayout";
+import tasks from "../../../store/tasks";
 
-interface Props {}
+interface Props {
+  tasksProps: ITask;
+}
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const project = ctx.query.project;
+const ProjectPage: NextPage<Props> = ({ tasksProps }) => {
+  const router = useRouter();
 
-  return {
-    props: {},
-  };
-};
+  const project = router.query.project;
 
-const ProjectPage: NextPage<Props> = ({}) => {
+  useEffect(() => {
+    if (project) {
+      tasks.getTodos(project);
+    }
+  }, [project]);
+
   return (
     <Layout>
-      <Tasks />
+      <TasksLayout>
+        <Tasks />
+      </TasksLayout>
     </Layout>
   );
 };
 
-export default withAuth(ProjectPage);
+export default ProjectPage;

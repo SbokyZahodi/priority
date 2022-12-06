@@ -24,7 +24,7 @@ const AddTask: FC<props> = ({}) => {
     <>
       <div className="flex space-x-2">
         <input
-          className={` w-[500px]  bg-zinc-700 outline-none text-xl p-2 rounded-md min-h-[50px]`}
+          className={` bg-zinc-700 outline-none text-xl p-4 rounded-md w-full  `}
           value={Todo}
           onChange={(e) => setTodo(e.target.value)}
         />
@@ -45,7 +45,7 @@ const AddTask: FC<props> = ({}) => {
           </select>
         </div>
       </div>
-      <div className="flex justify-end w-[600px]">
+      <div className="flex justify-end">
         <button
           className="btn btn-outline px-10 btn-sm m-2"
           onClick={() => createTodo()}

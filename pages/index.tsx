@@ -1,15 +1,14 @@
 import { NextPage } from "next";
 import Layout from "../components/main/layout";
-import { withAuth } from "../lib/hoc/withAuth";
 
-interface Props {}
-
-const Home: NextPage<Props> = ({}) => {
+const Home: NextPage = () => {
   return (
     <Layout>
-      <div className={`h-full w-full flex justify-center items-center`}>Выберите проект</div>
+      <div className={`h-full w-full flex justify-center items-center`}>
+      Выберите проект
+    </div>
     </Layout>
   );
 };
 
-export default withAuth(Home);
+export default Home;

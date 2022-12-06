@@ -17,6 +17,7 @@ class Projects {
       this.projectsPending = true;
       return await projectsAPI.getProjects().then((res) => {
         runInAction(() => {
+          console.log(res, "PROJECTS LIST");
           this.projects = res;
           this.projectsPending = false;
         });
@@ -30,6 +31,41 @@ class Projects {
         this.projects.projects.push(res);
       });
     });
+  }
+
+  async updateProjectTitle(id: number, title: string) {
+    return await projectsAPI
+      .updateProjectTitle({
+        id,
+        title,
+      })
+      .then((res) => {
+        runInAction(() => {
+          this.projects.projects.forEach((item) => {
+            if (item.id === id) {
+              item.title = title;
+            }
+          });
+        });
+      })
+      .catch(() => {
+        console.log("Failed to update projectTitle");
+      });
+  }
+
+  async deleteProject(id: number) {
+    return await projectsAPI
+      .deleteProject(id)
+      .then(() => {
+        runInAction(() => {
+          this.projects.projects = this.projects.projects.filter(
+            (item) => item.id !== id
+          );
+        });
+      })
+      .catch(() => {
+        console.log("Failed to delete project");
+      });
   }
 }
 export default new Projects();

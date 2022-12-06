@@ -20,10 +20,12 @@ class Tasks {
     return await tasksAPI
       .addTask(data)
       .then((res) => {
-        this.tasks.tasks.push(res);
+        runInAction(() => {
+          this.tasks.tasks.push(res);
+        });
       })
       .catch((err) => {
-        console.log("Something goes wrong");
+        console.log("Failed to create todo");
       });
   }
 
@@ -38,8 +40,41 @@ class Tasks {
         });
       })
       .catch(() => {
-        console.log("Something goes wrong");
+        console.log("failed to get Todos");
       });
+  }
+
+  async deleteTodo(id: number) {
+    return await tasksAPI
+      .deleteTask(id)
+      .then((res) => {
+        runInAction(() => {
+          console.log("works?");
+          this.tasks.tasks = this.tasks.tasks.filter((item) => item.id !== id);
+        });
+      })
+      .catch(() => {
+        console.log("Remove task failed");
+      });
+  }
+
+  async updateTodo(id: number) {
+    const task = this.tasks.tasks.find((item) => item.id === id);
+
+    if (task) {
+      return await tasksAPI
+        .updateTask(task)
+        .then((res) => {
+          runInAction(() => {
+            this.tasks.tasks = this.tasks.tasks.filter(
+              (item) => item.id !== id
+            );
+          });
+        })
+        .catch(() => {
+          console.log("Failed update task");
+        });
+    }
   }
 }
 export default new Tasks();

@@ -7,16 +7,14 @@ export default async function handler(
   res: NextApiResponse
 ) {
   if (req.method === "GET") {
-    const { projectId } = req.query;
-
-    console.log(projectId)
+    const { projectId, branch } = req.query;
 
     const todos = await context.prisma.projects.findUnique({
       where: {
         url_by_title: toURL(projectId),
       },
       select: {
-        tasks: true,
+        Branch: true,
       },
     });
 

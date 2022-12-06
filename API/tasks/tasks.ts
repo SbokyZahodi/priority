@@ -1,3 +1,4 @@
+import { ITask } from "./../projects/response";
 import axios from "axios";
 
 class TasksAPI {
@@ -16,6 +17,29 @@ class TasksAPI {
         ...data,
       })
     ).data;
+  }
+
+  async deleteTask(id: number) {
+    return (
+      await this.instanse.delete("delete", {
+        data: {
+          id,
+        },
+      })
+    ).status;
+  }
+
+  async updateTask(data: {
+    completed: boolean;
+    priority: number;
+    todo: string;
+    id: number;
+  }) {
+    return (
+      await this.instanse.patch("patch", {
+        ...data,
+      })
+    ).status;
   }
 }
 export const tasksAPI = new TasksAPI();

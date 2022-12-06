@@ -18,7 +18,7 @@ export const withAuth = (Component: any) => {
       checkIsUserAuth();
     }, []);
 
-    return <Component />;
+    return <Component  />;
   };
 
   return AuthComponent;

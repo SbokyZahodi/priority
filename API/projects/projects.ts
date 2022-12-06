@@ -1,4 +1,4 @@
-import { IProject } from "./response";
+import { IProject, ITask } from "./response";
 import axios from "axios";
 
 class ProjectsAPI {
@@ -19,7 +19,19 @@ class ProjectsAPI {
   }
 
   async getTodos(url_by_title: string) {
-    return (await this.instanse.get<>(`${url_by_title}`)).data;
+    return (await this.instanse.get<ITask>(`${url_by_title}`)).data;
+  }
+
+  async deleteProject(id: number) {
+    return await this.instanse.delete("delete", {
+      data: {
+        id,
+      },
+    });
+  }
+
+  async updateProjectTitle(data: { id: number; title: string }) {
+    return (await this.instanse.patch("patch", data)).status;
   }
 }
 export const projectsAPI = new ProjectsAPI();

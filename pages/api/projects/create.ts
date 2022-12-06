@@ -20,6 +20,11 @@ export default async function handler(
               id: +userid,
             },
           },
+          Branch: {
+            create: {
+              title: "main",
+            },
+          },
         },
       });
 

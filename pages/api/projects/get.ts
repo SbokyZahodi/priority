@@ -7,16 +7,18 @@ export default async function handler(
 ) {
   if (req.method === "GET") {
     const userid = req.headers.userid;
+
     const projects = await context.prisma.user.findUnique({
       where: {
         id: +userid,
       },
+
       select: {
         projects: {
           select: {
             id: true,
-            url_by_title: true,
             title: true,
+            Branch: true,
           },
         },
       },
